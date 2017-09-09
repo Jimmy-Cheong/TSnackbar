@@ -20,10 +20,7 @@ CUSTOMIZE YOUR ICON
 STYLE_LOADING
 <div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic4.png"/></div>   
 
-## Gradle Config
-    dependencies{
-      compile 'com.abby.app:tsnackbar:1.0.1'
-    }
+
 
 ## Usage
        @Override
