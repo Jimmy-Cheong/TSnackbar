@@ -22,7 +22,7 @@ STYLE_LOADING
 
 ## Gradle Config
     dependencies{
-      compile 'com.abby.app:tsnackbar:0.1.0'
+      compile 'com.abby.app:tsnackbar:1.0.1'
     }
 
 ## Usage
