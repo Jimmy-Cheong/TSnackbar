@@ -65,7 +65,7 @@ class SnackbarManager {
 
     public void show(int duration, Callback callback) {
         synchronized (mLock) {
-            if (isCurrentSnackbarLocked(callback)) {
+                if (isCurrentSnackbarLocked(callback)) {
                 // Means that the callback is already in the queue. We'll just update the duration
                 mCurrentSnackbar.duration = duration;
 
@@ -140,6 +140,9 @@ class SnackbarManager {
             }
         }
     }
+    
+
+
 
     public void restoreTimeout(Callback callback) {
         synchronized (mLock) {
@@ -189,6 +192,7 @@ class SnackbarManager {
             }
         }
     }
+
 
     private boolean cancelSnackbarLocked(SnackbarRecord record, int event) {
         final Callback callback = record.callback.get();

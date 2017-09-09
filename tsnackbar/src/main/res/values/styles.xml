@@ -16,9 +16,7 @@
 -->
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
-    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>
 
 
     <style name="TextAppearance.Design.Snackbar.Message" parent="android:TextAppearance">

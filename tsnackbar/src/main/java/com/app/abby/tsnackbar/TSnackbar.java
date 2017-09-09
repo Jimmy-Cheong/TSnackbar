@@ -15,28 +15,22 @@ package com.app.abby.tsnackbar;/*
  */
 
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.ParcelUuid;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-//import android.support.design.R;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
@@ -49,16 +43,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.lang.annotation.Retention;
@@ -87,6 +78,7 @@ public final class TSnackbar {
      * Callback class for {@link } instances.
      *
      */
+
     public static abstract class Callback {
         /** Indicates that the Snackbar was dismissed via a swipe.*/
         public static final int DISMISS_EVENT_SWIPE = 0;
@@ -200,7 +192,24 @@ public final class TSnackbar {
     }
 
     //Set the icon
+    public TSnackbar setIconRes(int iconRes,int widpx,int heipx){
+
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(widpx,heipx);
+        params.gravity=Gravity.CENTER_VERTICAL;
+        mView.getIconView().setLayoutParams(params);
+        mView.getIconView().setVisibility(View.VISIBLE);
+        mView.getIconView().setImageResource(iconRes);
+
+        return this;
+    }
+
+
+    //set the icon ,size default to be 15dp
     public TSnackbar setIconRes(int iconRes){
+
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(Util.dp2px(mContext,15),Util.dp2px(mContext,15));
+        params.gravity=Gravity.CENTER_VERTICAL;
+        mView.getIconView().setLayoutParams(params);
         mView.getIconView().setVisibility(View.VISIBLE);
         mView.getIconView().setImageResource(iconRes);
         return this;
@@ -246,11 +255,20 @@ public final class TSnackbar {
 
             setBackgroundColor(Color.BLUE);
             setAlpha(150);
+
             mView.getIconView().setVisibility(View.VISIBLE);
-            Drawable drawable=mContext.getResources().getDrawable(R.drawable.rotate,null);
-            ObjectAnimator animator=ObjectAnimator.ofInt(drawable,"level",0,30000);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(Util.dp2px(mContext,15),Util.dp2px(mContext,15));
+            params.gravity=Gravity.CENTER_VERTICAL;
+            mView.getIconView().setLayoutParams(params);
+            Drawable drawable;
+            if(Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
+               drawable=mContext.getResources().getDrawable(R.drawable.rotate);
+            }else {
+                drawable=mContext.getResources().getDrawable(R.drawable.rotate,null);
+            }
+            ObjectAnimator animator=ObjectAnimator.ofInt(drawable,"level",0,10000);
             animator.setInterpolator(new LinearInterpolator());
-            animator.setDuration(800);
+            animator.setDuration(1200);
             animator.setRepeatCount(ValueAnimator.INFINITE);
             mView.getIconView().setImageDrawable(drawable);
             animator.start();
@@ -356,6 +374,7 @@ public final class TSnackbar {
     public static TSnackbar make(@NonNull View view, @NonNull CharSequence text,
                                 @Duration int duration) {
         TSnackbar snackbar = new TSnackbar(findSuitableParent(view));
+
         snackbar.setText(text);
         snackbar.setDuration(duration);
         return snackbar;
@@ -681,9 +700,9 @@ public final class TSnackbar {
     private void animateViewIn() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-                ViewCompat.setTranslationY(mView,mShowsDir==0?-mView.getHeight():mView.getHeight());
+                ViewCompat.setTranslationY(mView,mShowsDir==0?-mView.getHeight():mView.getMeasuredHeight());
                 ViewCompat.animate(mView)
-                        .translationY(0f)
+                        .translationY(-Util.getNavigationBarHeight(mContext))
                         .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
                         .setDuration(ANIMATION_DURATION)
                         .setListener(new ViewPropertyAnimatorListenerAdapter() {
@@ -762,12 +781,9 @@ public final class TSnackbar {
             }
 
 
-
-
-
         } else {
-            Animation anim;
 
+            Animation anim;
             if (mFadeOrTranslate==STYLE_FADE_OUT){
                 anim = AnimationUtils.loadAnimation(mView.getContext(),
                         R.anim.design_tsnackbar_fade_out);

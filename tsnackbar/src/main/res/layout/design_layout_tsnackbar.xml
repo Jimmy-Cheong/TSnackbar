@@ -7,13 +7,10 @@
 
     <ImageView
         android:visibility="gone"
-        android:layout_gravity="start|center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/icon"
-        android:paddingBottom="@dimen/design_snackbar_padding_vertical"
-        android:paddingTop="@dimen/design_snackbar_padding_vertical"
-        android:paddingEnd="@dimen/design_snackbar_icon_padding"
+
         />
 
     <TextView

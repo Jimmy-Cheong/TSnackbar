@@ -2,6 +2,10 @@
 
     package="com.app.abby.tsnackbar">
 
+    <uses-sdk
+        android:maxSdkVersion="25"
+        android:minSdkVersion="22"/>
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"

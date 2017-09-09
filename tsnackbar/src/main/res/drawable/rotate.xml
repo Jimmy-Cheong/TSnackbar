@@ -1,7 +1,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <rotate
-            android:drawable="@drawable/ic_icon_loading"
+            android:drawable="@drawable/ic_loading"
             android:fromDegrees="0"
             android:toDegrees="360"
             android:pivotX="50%"
