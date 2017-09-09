@@ -20,7 +20,10 @@ CUSTOMIZE YOUR ICON
 STYLE_LOADING
 <div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic4.png"/></div>   
 
-
+## Gradle 
+		dependencies{
+			compile 'com.abby.app:tsnackbar:1.0.1'
+		 }
 
 ## Usage
        @Override
@@ -42,6 +45,7 @@ STYLE_LOADING
                         .show();
     }        
     
+  
   
     
 ## Features
@@ -70,6 +74,10 @@ STYLE_LOADING
         <td>setIconRes</td>
         <td>set the Icon resource</td>
     <tr>
+	    <tr>
+		    <td>setIconRes</td>
+		    <td>set Icon res with sizes in px</td>
+	    </tr>
         <td>setPreDefinedStyle</td>
         <td>apply the predefined style,which are STYLE_ERROE,STYLE_COMPLETE,STYLE_LOADING,STYLE_WARNING</td>
     </tr>
@@ -82,7 +90,7 @@ STYLE_LOADING
  </div>
  
  # License
-    Copyright 2017 Abby
+    Copyright 2017 AbbyJM
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
