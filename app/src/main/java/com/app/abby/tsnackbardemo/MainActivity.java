@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.app.abby.tsnackbar.TSnackbar;
+import com.app.abby.tsnackbar.Util;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TSnackbar.make(getWindow().getDecorView(),"正在加载中",TSnackbar.LENGTH_LONG)
-                        .setIconRes(R.drawable.ic_wifi_black_24dp)
+                        .setIconRes(R.mipmap.ic_launcher, Util.dp2px(MainActivity.this,20),Util.dp2px(MainActivity.this,20))
                         .setBackgroundColor(Color.GREEN)
                         .show();
             }
