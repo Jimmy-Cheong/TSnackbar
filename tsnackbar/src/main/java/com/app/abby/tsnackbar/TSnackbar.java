@@ -74,10 +74,7 @@ import static com.app.abby.tsnackbar.AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATO
  */
 public final class TSnackbar {
 
-    /**
-     * Callback class for {@link } instances.
-     *
-     */
+
 
     public static abstract class Callback {
         /** Indicates that the Snackbar was dismissed via a swipe.*/
@@ -91,7 +88,7 @@ public final class TSnackbar {
         /** Indicates that the Snackbar was dismissed from a new Snackbar being shown.*/
         public static final int DISMISS_EVENT_CONSECUTIVE = 4;
 
-        /** @hide */
+
         @IntDef({DISMISS_EVENT_SWIPE, DISMISS_EVENT_ACTION, DISMISS_EVENT_TIMEOUT,
                 DISMISS_EVENT_MANUAL, DISMISS_EVENT_CONSECUTIVE})
         @Retention(RetentionPolicy.SOURCE)
@@ -125,13 +122,17 @@ public final class TSnackbar {
         }
     }
 
+    //define if is below the status bar
+    private boolean mBelowStatusBar=false;
+    public TSnackbar isBelowStatusBar(boolean isBelowStatusBar){
+        mBelowStatusBar=isBelowStatusBar;
+        return this;
+    }
 
-    /*
-     *
-     */
 
 
-    @IntDef({STYLE_FADE_OUT,STYLE_TRANSLATE})
+
+    @IntDef({STYLE_FADE_OUT,STYLE_TRANSLATE,STYLE_FADE_IN,STYLE_FADE_IN_FADE_OUT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface STYLE_IN_OUT{}
 
@@ -145,6 +146,8 @@ public final class TSnackbar {
     //Define the style that snackbar animate in and out
     public static final int STYLE_FADE_OUT=0;
     public static final int STYLE_TRANSLATE=1;
+    public static final int STYLE_FADE_IN=2;
+    public static final int STYLE_FADE_IN_FADE_OUT=3;
 
 
 
@@ -166,6 +169,7 @@ public final class TSnackbar {
 
     //Indicates that the shackbar shows from the bottom
     public static final int SHOW_FROM_BOTTOM_TO_TOP=1;
+
 
 
     //Sets the color of the background
@@ -246,23 +250,20 @@ public final class TSnackbar {
 
         if(style==STYLE_WARNING){
 
-            setBackgroundColor(Color.YELLOW);
-            setAlpha(150);
+            setBackgroundColor(Color.RED);
             setIconRes(R.drawable.ic_icon_warnning);
         }
 
         else if(style==STYLE_LOADING){
 
             setBackgroundColor(Color.BLUE);
-            setAlpha(150);
-
             mView.getIconView().setVisibility(View.VISIBLE);
             LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(Util.dp2px(mContext,15),Util.dp2px(mContext,15));
             params.gravity=Gravity.CENTER_VERTICAL;
             mView.getIconView().setLayoutParams(params);
             Drawable drawable;
             if(Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
-               drawable=mContext.getResources().getDrawable(R.drawable.rotate);
+                drawable=mContext.getResources().getDrawable(R.drawable.rotate);
             }else {
                 drawable=mContext.getResources().getDrawable(R.drawable.rotate,null);
             }
@@ -276,9 +277,7 @@ public final class TSnackbar {
         }
         return this;
     }
-    /**
-     * @hide
-     */
+
     @IntDef({LENGTH_INDEFINITE, LENGTH_SHORT, LENGTH_LONG})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Duration {}
@@ -372,7 +371,7 @@ public final class TSnackbar {
      */
     @NonNull
     public static TSnackbar make(@NonNull View view, @NonNull CharSequence text,
-                                @Duration int duration) {
+                                 @Duration int duration) {
         TSnackbar snackbar = new TSnackbar(findSuitableParent(view));
 
         snackbar.setText(text);
@@ -606,14 +605,15 @@ public final class TSnackbar {
             FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             param.gravity=mShowsDir==SHOW_FROM_TOP_TO_BOTTOM? Gravity.TOP:Gravity.BOTTOM;
             mView.setLayoutParams(param);
+
         }
 
         if (mView.getParent() == null) {
             final ViewGroup.LayoutParams lp = mView.getLayoutParams();
 
             if (lp instanceof CoordinatorLayout.LayoutParams) {
-                // If our LayoutParams are from a CoordinatorLayout, we'll setup our Behavior
 
+                // If our LayoutParams are from a CoordinatorLayout, we'll setup our Behavior
                 final Behavior behavior = new Behavior();
                 behavior.setStartAlphaSwipeDistance(0.1f);
                 behavior.setEndAlphaSwipeDistance(0.6f);
@@ -700,9 +700,36 @@ public final class TSnackbar {
     private void animateViewIn() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-                ViewCompat.setTranslationY(mView,mShowsDir==0?-mView.getHeight():mView.getMeasuredHeight());
+            if(mFadeOrTranslate==STYLE_FADE_IN|mFadeOrTranslate==STYLE_FADE_IN_FADE_OUT){
+                if(mBelowStatusBar)
+                    ViewCompat.setTranslationY(mView,mShowsDir==0?Util.getStatusHeight(mContext):-Util.getNavigationBarHeight(mContext));
+                else      ViewCompat.setTranslationY(mView,mShowsDir==0?0:-Util.getNavigationBarHeight(mContext));
+
+                mView.setAlpha(0);
                 ViewCompat.animate(mView)
-                        .translationY(-Util.getNavigationBarHeight(mContext))
+                        .alpha(1)
+                        .setInterpolator(new LinearInterpolator())
+                        .setDuration(1000)
+                        .setListener(new ViewPropertyAnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(View view) {
+                                mView.animateChildrenIn(ANIMATION_DURATION - ANIMATION_FADE_DURATION,
+                                        ANIMATION_FADE_DURATION);
+                            }
+
+                            @Override
+                            public void onAnimationEnd(View view) {
+                                onViewShown();
+                            }
+                        }).start();
+            }else {
+                ViewCompat.setTranslationY(mView,mShowsDir==0?-mView.getHeight():mView.getHeight());
+
+                int translateYForTop=0;
+                if(mBelowStatusBar)translateYForTop=Util.getStatusHeight(mContext);
+                else translateYForTop=0;
+                ViewCompat.animate(mView)
+                        .translationY(mShowsDir==0?translateYForTop:-Util.getNavigationBarHeight(mContext))
                         .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
                         .setDuration(ANIMATION_DURATION)
                         .setListener(new ViewPropertyAnimatorListenerAdapter() {
@@ -717,8 +744,10 @@ public final class TSnackbar {
                                 onViewShown();
                             }
                         }).start();
+            }
 
         } else {
+
             Animation anim = AnimationUtils.loadAnimation(mView.getContext(),
                     R.anim.design_snackbar_in);
             anim.setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR);
@@ -743,9 +772,9 @@ public final class TSnackbar {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            if(mFadeOrTranslate==STYLE_FADE_OUT){
+            if(mFadeOrTranslate==STYLE_FADE_OUT|mFadeOrTranslate==STYLE_FADE_IN_FADE_OUT){
                 if(mShowsDir==0)
-                    ViewCompat.setTranslationY(mView,0);
+                    ViewCompat.setTranslationY(mView,mBelowStatusBar?Util.getStatusHeight(mContext):0);
                 mView.setAlpha(1);
                 ViewCompat.animate(mView)
                         .alpha(0)
@@ -763,21 +792,25 @@ public final class TSnackbar {
                         }).start();
             }else {
 
-            ViewCompat.animate(mView)
-                    .translationY(mShowsDir==0?-mView.getHeight():mView.getHeight())
-                    .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
-                    .setDuration(ANIMATION_DURATION)
-                    .setListener(new ViewPropertyAnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationStart(View view) {
-                            mView.animateChildrenOut(0, ANIMATION_FADE_DURATION);
-                        }
+                int translateYForTop=0;
+                if(mBelowStatusBar)translateYForTop=-mView.getHeight()-Util.getStatusHeight(mContext);
+                else translateYForTop=-mView.getHeight();
 
-                        @Override
-                        public void onAnimationEnd(View view) {
-                            onViewHidden(event);
-                        }
-                    }).start();
+                ViewCompat.animate(mView)
+                        .translationY(mShowsDir==0?translateYForTop:mView.getHeight())
+                        .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
+                        .setDuration(ANIMATION_DURATION)
+                        .setListener(new ViewPropertyAnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(View view) {
+                                mView.animateChildrenOut(0, ANIMATION_FADE_DURATION);
+                            }
+
+                            @Override
+                            public void onAnimationEnd(View view) {
+                                onViewHidden(event);
+                            }
+                        }).start();
             }
 
 
@@ -845,9 +878,7 @@ public final class TSnackbar {
         return !mAccessibilityManager.isEnabled();
     }
 
-    /**
-     * @hide
-     */
+
     public static class SnackbarLayout extends LinearLayout {
         private ImageView mIconView;
         private TextView mMessageView;

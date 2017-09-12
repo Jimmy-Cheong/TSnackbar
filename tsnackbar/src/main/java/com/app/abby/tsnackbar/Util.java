@@ -13,30 +13,9 @@ import java.lang.reflect.Method;
 public class Util {
 
 
-    public static boolean checkDeviceHasNavigationBar(Context context){
-        boolean hasNavi=false;
-        Resources res=context.getResources();
-        int id=res.getIdentifier("config_showNavigationBar","bool","android");
-        if(id>0){
-            hasNavi=res.getBoolean(id);
-        }
-        try {
-            Class systemProperties=Class.forName("android.os.SystemProperties");
-            Method m=systemProperties.getMethod("get",String.class);
-            String navBarOverride=(String)m.invoke(systemProperties,"qemu.hw.mainkeys");
-            if("1".equals(navBarOverride)){
-                hasNavi=false;
-            }else if("0".equals(navBarOverride)){
-                hasNavi=true;
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return hasNavi;
-    }
-
 
     public static int getNavigationBarHeight(Context context){
+
 
         Resources res=context.getResources();
         try {
@@ -58,6 +37,14 @@ public class Util {
         return 0;
     }
 
+    public static int getStatusHeight(Context context){
+        int statusbarHeight=0;
+        int resId=context.getResources().getIdentifier("status_bar_height","dimen","android");
+        if(resId>0){
+            statusbarHeight=context.getResources().getDimensionPixelSize(resId);
+        }
+        return statusbarHeight;
+    }
 
     public static int dp2px(Context context, float dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
