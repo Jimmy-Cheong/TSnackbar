@@ -22,7 +22,7 @@ STYLE_LOADING
 
 ## Gradle 
 		dependencies{
-			compile 'com.abby.app:tsnackbar:1.0.1'
+			compile 'com.abby.app:tsnackbar:1.0.5'
 		 }
 
 ## Usage
@@ -83,7 +83,12 @@ STYLE_LOADING
     </tr>
     <tr>
         <td>setFadeOrTranslateStyle</td>
-        <td>set the style the snackbar animate out,which can be STYLE_FADE_OUT or STYLE_TRANSLATE</td>
+        <td>set the style the snackbar animate out,which can be STYLE_FADE_OUT,STYLE_FADE_IN,STYLE FADE_IN_FADE_OUT or STYLE_TRANSLATE</td>
+    </tr>
+    
+    <tr>
+      <td>isBelowStatusBar</td>
+      <td>indicate if the snackbar is below the statusbar</td>
     </tr>
     </table>
 </div>
