@@ -65,7 +65,7 @@ STYLE_LOADING
     </tr>
     <tr>
        <td>setAlpha</td>
-       <td>设置snackbar背景透明</td>
+       <td>设置snackbar背景透明度,设置值为0-255</td>
     </tr>
     <tr>
       <td>setMessageTextColor</td>
@@ -76,7 +76,7 @@ STYLE_LOADING
     <tr>
 	    <tr>
 		    <td>setIconRes</td>
-		    <td>设置图标资源，指定大小，单位为px</td>
+		    <td>设置图标资源，指定大小，单位为像素</td>
 	    </tr>
         <td>setPreDefinedStyle</td>
         <td>设置预定义风格，可以是 STYLE_ERROE,STYLE_COMPLETE,STYLE_LOADING或STYLE_WARNING</td>
