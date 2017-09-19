@@ -1,3 +1,4 @@
+[中文版](README_CN.md) | **English** </br>
 TSnackbar
 ==========
     A snackbar can be shown from top or bottom.
