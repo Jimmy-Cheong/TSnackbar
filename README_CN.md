@@ -1,4 +1,4 @@
-[English](README.md) | **中文版** </br>
+[English](https://github.com/AbbyJM/TSnackbar) | **中文版** </br>
 TSnackbar
 ==========
     一个可以从顶部滑出的snackbar
@@ -22,9 +22,13 @@ STYLE_LOADING
 
 ## Gradle 
 		dependencies{
-			compile 'com.abby.app:tsnackbar:1.0.5'
+			compile 'com.abby.app:tsnackbar:1.0.6'
 		 }
-
+ 
+## 版本更新
+   v1.0.6:
+      添加setHeight方法设置高度
+      
 ## 用法
        @Override
        public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +94,10 @@ STYLE_LOADING
       <td>isBelowStatusBar</td>
       <td>指定snackbar是否位于状态栏下方</td>
     </tr>
+    <tr>
+    	<td>setHeight</td>
+	<td>设置snackbar的高度，由于存在padding，建议您将高度设置为大于120dp以防止内容被padding覆盖，***默认的高度是wrap_content***
+    </tr>
     </table>
 </div>
  </div>
