@@ -23,10 +23,16 @@ STYLE_LOADING
 
 ## Gradle 
 		dependencies{
-			compile 'com.abby.app:tsnackbar:1.0.5'
+			compile 'com.abby.app:tsnackbar:1.0.6' 
 		 }
 
+
+## Update
+		
+	v1.0.6:
+	  new method setHeight(int height) to set the height to the snackbar
 ## Usage
+```java
        @Override
        public void onCreate(Bundle savedInstanceState) {
     
@@ -46,7 +52,7 @@ STYLE_LOADING
                         .show();
     }        
     
-  
+```  
   
     
 ## Features
@@ -90,6 +96,10 @@ STYLE_LOADING
     <tr>
       <td>isBelowStatusBar</td>
       <td>indicate if the snackbar is below the statusbar</td>
+    </tr>
+    <tr>
+    	<td>setHeight</td>
+	<td>set the height of snackbar in dp,to get a better effect,recommend use a value greater than 120 due to the padding,***the default height is wrap_content***  </td>
     </tr>
     </table>
 </div>
