@@ -30,6 +30,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.view.ViewCompat;
@@ -208,16 +209,28 @@ public final class TSnackbar {
     }
 
 
+    //set up the height of the snackbar
+    private int mHeght=-1;
+
+    public TSnackbar setHeight(int height){
+        mHeght=height<120?120:height;
+        return this;
+    }
+
+
     //set the icon ,size default to be 15dp
     public TSnackbar setIconRes(int iconRes){
 
         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(Util.dp2px(mContext,15),Util.dp2px(mContext,15));
+
         params.gravity=Gravity.CENTER_VERTICAL;
         mView.getIconView().setLayoutParams(params);
         mView.getIconView().setVisibility(View.VISIBLE);
         mView.getIconView().setImageResource(iconRes);
         return this;
     }
+
+
 
     //Pre-defined styles for snackbar
     public static final int STYLE_LOADING=0;
@@ -602,9 +615,10 @@ public final class TSnackbar {
         if(mView!=null){
             mView.setBackgroundColor(mColor);
             mView.getBackground().setAlpha(mAlpha);
-            FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            FrameLayout.LayoutParams param = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mHeght==-1?FrameLayout.LayoutParams.WRAP_CONTENT:mHeght);
             param.gravity=mShowsDir==SHOW_FROM_TOP_TO_BOTTOM? Gravity.TOP:Gravity.BOTTOM;
             mView.setLayoutParams(param);
+            mView.setGravity(Gravity.CENTER_VERTICAL);
 
         }
 
@@ -701,9 +715,11 @@ public final class TSnackbar {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
             if(mFadeOrTranslate==STYLE_FADE_IN|mFadeOrTranslate==STYLE_FADE_IN_FADE_OUT){
-                if(mBelowStatusBar)
-                    ViewCompat.setTranslationY(mView,mShowsDir==0?Util.getStatusHeight(mContext):-Util.getNavigationBarHeight(mContext));
-                else      ViewCompat.setTranslationY(mView,mShowsDir==0?0:-Util.getNavigationBarHeight(mContext));
+                if(mBelowStatusBar) {
+                    ViewCompat.setTranslationY(mView, mShowsDir == 0 ? Util.getStatusHeight(mContext) : -Util.getNavigationBarHeight(mContext));
+                } else {
+                    ViewCompat.setTranslationY(mView, mShowsDir == 0 ? 0 : -Util.getNavigationBarHeight(mContext));
+                }
 
                 mView.setAlpha(0);
                 ViewCompat.animate(mView)
@@ -726,8 +742,11 @@ public final class TSnackbar {
                 ViewCompat.setTranslationY(mView,mShowsDir==0?-mView.getHeight():mView.getHeight());
 
                 int translateYForTop=0;
-                if(mBelowStatusBar)translateYForTop=Util.getStatusHeight(mContext);
-                else translateYForTop=0;
+                if(mBelowStatusBar) {
+                    translateYForTop = Util.getStatusHeight(mContext);
+                } else {
+                    translateYForTop = 0;
+                }
                 ViewCompat.animate(mView)
                         .translationY(mShowsDir==0?translateYForTop:-Util.getNavigationBarHeight(mContext))
                         .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
@@ -773,8 +792,9 @@ public final class TSnackbar {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             if(mFadeOrTranslate==STYLE_FADE_OUT|mFadeOrTranslate==STYLE_FADE_IN_FADE_OUT){
-                if(mShowsDir==0)
-                    ViewCompat.setTranslationY(mView,mBelowStatusBar?Util.getStatusHeight(mContext):0);
+                if(mShowsDir==0) {
+                    ViewCompat.setTranslationY(mView, mBelowStatusBar ? Util.getStatusHeight(mContext) : 0);
+                }
                 mView.setAlpha(1);
                 ViewCompat.animate(mView)
                         .alpha(0)
@@ -793,8 +813,11 @@ public final class TSnackbar {
             }else {
 
                 int translateYForTop=0;
-                if(mBelowStatusBar)translateYForTop=-mView.getHeight()-Util.getStatusHeight(mContext);
-                else translateYForTop=-mView.getHeight();
+                if(mBelowStatusBar) {
+                    translateYForTop = -mView.getHeight() - Util.getStatusHeight(mContext);
+                } else {
+                    translateYForTop = -mView.getHeight();
+                }
 
                 ViewCompat.animate(mView)
                         .translationY(mShowsDir==0?translateYForTop:mView.getHeight())
