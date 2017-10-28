@@ -30,7 +30,7 @@ STYLE_LOADING
 ## Update
 		
 	v1.0.6:
-	  new method setHeight(int height) to set the height to the snackbar
+	  new method setHeight(int height) to set the height of the snackbar
 ## Usage
 ```java
        @Override
