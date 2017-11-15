@@ -22,13 +22,15 @@ STYLE_LOADING
 
 ## Gradle 
 		dependencies{
-			compile 'com.abby.app:tsnackbar:1.0.6'
+			compile 'com.abby.app:tsnackbar:1.0.7'
 		 }
  
 ## 版本更新
-   v1.0.6:
-      添加setHeight方法设置高度
-      
+	   v1.0.6:
+	      添加setHeight方法设置高度
+	   v1.0.7
+	      添加setMessageGravity方法设置Message文本的重心方向
+	      添加setActionTextSize方法设置action button的尺寸
 ## 用法
        @Override
        public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,19 @@ STYLE_LOADING
     	<td>setHeight</td>
 	<td>设置snackbar的高度，由于存在padding，建议您将高度设置为大于120dp以防止内容被padding覆盖，***默认的高度是wrap_content***
     </tr>
-    </table>
+    
+    <tr>
+    	<td>setMessageGravity(int grativy)</td>
+	<td>设置message文本的重心方向，必须是Gravity.START,Gravity.CENTER或者Gravity.END其中一个，***默认的重心方向是Gravity.START***</td>
+    </tr>
+    
+    <tr>
+    	<td>setActionTextSize(float size)</td>
+	<td>设置action button的文本尺寸</td>
+    </tr>
+    
+    
+   </table>
 </div>
  </div>
  
