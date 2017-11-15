@@ -23,7 +23,7 @@ STYLE_LOADING
 
 ## Gradle 
 		dependencies{
-			compile 'com.abby.app:tsnackbar:1.0.6' 
+			compile 'com.abby.app:tsnackbar:1.0.7' 
 		 }
 
 
@@ -31,6 +31,10 @@ STYLE_LOADING
 		
 	v1.0.6:
 	  new method setHeight(int height) to set the height of the snackbar
+	v1.0.7:
+	  new method setMessageGravity(int gravity) to set the gravity of the message text
+	  new method setActionTextSize(float size) to set the size of the action button
+	  
 ## Usage
 ```java
        @Override
@@ -101,6 +105,15 @@ STYLE_LOADING
     	<td>setHeight</td>
 	<td>set the height of snackbar in dp,to get a better effect,recommend use a value greater than 120 due to the padding,***the default height is wrap_content***  </td>
     </tr>
+    <tr>
+        <td>setActionTextSize(float size)</td>
+	<td>set the font size of the action button</td> 
+    </tr>
+    	<td>setMessageGravity(int gravity)</td>
+	<td>set the gravity of the message text,must be one of Gravity.START,Gravity.CENTER or Gravity.END.The default gravity is Gravity.START</td>
+    <tr>
+    	<td>
+    </td>
     </table>
 </div>
  </div>
