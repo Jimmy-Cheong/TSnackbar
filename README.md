@@ -30,11 +30,11 @@ STYLE_LOADING
 ## Update
 		
 	v1.0.6:
-	  new method setHeight(int height) to set the height of the snackbar
+	  1.new method setHeight(int height) to set the height of the snackbar
 	v1.0.7:
-	  new method setMessageGravity(int gravity) to set the gravity of the message text
-	  new method setActionTextSize(float size) to set the size of the action button
-	  
+	  1.new method setMessageGravity(int gravity) to set the gravity of the message text
+	  2.new method setActionTextSize(float size) to set the size of the action button
+	  3.upgrade API version to 26,so do not forget to upgrade your API version 
 ## Usage
 ```java
        @Override
