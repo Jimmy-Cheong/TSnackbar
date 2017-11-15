@@ -27,10 +27,11 @@ STYLE_LOADING
  
 ## 版本更新
 	   v1.0.6:
-	      添加setHeight方法设置高度
+	      1.添加setHeight方法设置高度
 	   v1.0.7
-	      添加setMessageGravity方法设置Message文本的重心方向
-	      添加setActionTextSize方法设置action button的尺寸
+	      1.添加setMessageGravity方法设置Message文本的重心方向
+	      2.添加setActionTextSize方法设置action button的尺寸
+	      3.更新API版本至26，如果导入依赖后同步失败的话，请更新您的API版本
 ## 用法
        @Override
        public void onCreate(Bundle savedInstanceState) {
