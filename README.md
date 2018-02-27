@@ -7,19 +7,10 @@ Introduction
 ============
 It is customizable and easy to use.You can change the style of the snackbar or apply the predefined styles,which are ERROR,LOADING,COMPLETE,WARNING
   
-ScreenShot
+Effect
 ===========
-STYLE_ERROR
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic1.png"/></div>   
- 
-STYLE_COMPLETE
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic2.png"/></div>   
- 
-CUSTOMIZE YOUR ICON
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic3.png"/></div>   
- 
-STYLE_LOADING
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic4.png"/></div>   
+
+<div align=center><img width="236" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/demo.gif"/></div>   
 
 ## Gradle 
 		dependencies{
