@@ -6,19 +6,10 @@ TSnackbar
 ============
 基于官方的snackbar做了一些修改，使TSnackbar支持从顶部滑出。tsnackbar内置了几种提醒的样式ERROR,LOADING,COMPLETE,WARNING，当然也可以自己定义。
   
-截图
+效果
 ===========
-STYLE_ERROR
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic1.png"/></div>   
- 
-STYLE_COMPLETE
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic2.png"/></div>   
- 
-CUSTOMIZE YOUR ICON
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic3.png"/></div>   
- 
-STYLE_LOADING
-<div align=center><img width="216" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/screenshot/pic4.png"/></div>   
+
+<div align=center><img width="236" height="384" src="https://github.com/AbbyJM/TSnackbar/raw/master/demo.gif"/></div>   
 
 ## Gradle 
 		dependencies{
